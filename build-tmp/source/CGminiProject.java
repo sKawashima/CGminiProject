@@ -26,7 +26,6 @@ float ball_z_acc = 0;
 float ball_speed = 0.2f;
 
 public void draw() {
-	calcBallPosition();
 
 	if(keyPressed == true){
 		if(key == 's'){
@@ -45,11 +44,11 @@ public void draw() {
 
 	background(240);
 	translate(width/2,height/2,0);
-	/*camera(0.0, 0.0, 300, // \u8996\u70b9X, \u8996\u70b9Y, \u8996\u70b9Z
-	ball_x, 0.0, ball_z, // \u4e2d\u5fc3\u70b9X, \u4e2d\u5fc3\u70b9Y, \u4e2d\u5fc3\u70b9Z
-	0.0, 1.0, 0.0); // \u5929\u5730X, \u5929\u5730Y, \u5929\u5730Z*/
+	camera(ball_x, 0, 300 + ball_z, // \u30ab\u30e1\u30e9\u306e\u4f4d\u7f6e
+	ball_x - ball_x_acc*3, 0.0f, ball_z - ball_z_acc*3, // \u30ab\u30e1\u30e9\u304c\u5411\u304f\u5ea7\u6a19
+	0.0f, 1.0f, 0.0f); // \u30ab\u30e1\u30e9\u306e\u56de\u8ee2
 
-	println("ball_z: "+ball_z);
+	calcBallPosition();
 
 	pushMatrix();
 		translate(0, 100, /*-roadLength/2*/0);

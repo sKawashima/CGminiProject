@@ -10,7 +10,6 @@ float ball_z_acc = 0;
 float ball_speed = 0.2;
 
 void draw() {
-	calcBallPosition();
 
 	if(keyPressed == true){
 		if(key == 's'){
@@ -29,11 +28,11 @@ void draw() {
 
 	background(240);
 	translate(width/2,height/2,0);
-	/*camera(0.0, 0.0, 300, // 視点X, 視点Y, 視点Z
-	ball_x, 0.0, ball_z, // 中心点X, 中心点Y, 中心点Z
-	0.0, 1.0, 0.0); // 天地X, 天地Y, 天地Z*/
+	camera(ball_x, 0, 300 + ball_z, // カメラの位置
+	ball_x - ball_x_acc*3, 0.0, ball_z - ball_z_acc*3, // カメラが向く座標
+	0.0, 1.0, 0.0); // カメラの回転
 
-	println("ball_z: "+ball_z);
+	calcBallPosition();
 
 	pushMatrix();
 		translate(0, 100, /*-roadLength/2*/0);
