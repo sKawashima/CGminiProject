@@ -24,6 +24,13 @@ void draw() {
 		if(key == 'a'){
 			ball_x_acc -= ball_speed;
 		}
+		if(key == 'r'){
+			//リセットの処理を追加する
+			ball_x = 0;
+			ball_z = 0;
+			ball_x_acc = 0;
+			ball_z_acc = 0;
+		}
 	}
 
 	background(240);
@@ -38,8 +45,12 @@ void draw() {
 		translate(0, 100, /*-roadLength/2*/0);
 		box(250,20,roadLength);
 	popMatrix();
+
+	//ボールの描写
 	pushMatrix();
 		translate(ball_x, 70, ball_z);
+		rotateX(-ball_z/50);
+		rotateZ(ball_x/50);
 		sphere(20);
 	popMatrix();
 }
