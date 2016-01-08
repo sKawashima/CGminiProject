@@ -40,6 +40,13 @@ public void draw() {
 		if(key == 'a'){
 			ball_x_acc -= ball_speed;
 		}
+		if(key == 'r'){
+			//\u30ea\u30bb\u30c3\u30c8\u306e\u51e6\u7406\u3092\u8ffd\u52a0\u3059\u308b
+			ball_x = 0;
+			ball_z = 0;
+			ball_x_acc = 0;
+			ball_z_acc = 0;
+		}
 	}
 
 	background(240);
@@ -54,8 +61,12 @@ public void draw() {
 		translate(0, 100, /*-roadLength/2*/0);
 		box(250,20,roadLength);
 	popMatrix();
+
+	//\u30dc\u30fc\u30eb\u306e\u63cf\u5199
 	pushMatrix();
 		translate(ball_x, 70, ball_z);
+		rotateX(-ball_z/50);
+		rotateZ(ball_x/50);
 		sphere(20);
 	popMatrix();
 }
