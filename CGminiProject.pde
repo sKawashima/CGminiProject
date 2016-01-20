@@ -10,7 +10,6 @@ float ball_z_acc = 0;
 float ball_speed = 0.2;
 
 void draw() {
-
 	if(keyPressed == true){
 		if(key == 's'){
 			ball_z_acc += ball_speed;
@@ -41,10 +40,7 @@ void draw() {
 
 	calcBallPosition();
 
-	pushMatrix();
-		translate(0, 100, /*-roadLength/2*/0);
-		box(250,20,roadLength);
-	popMatrix();
+	setStage(1);
 
 	//ボールの描写
 	pushMatrix();
@@ -52,6 +48,8 @@ void draw() {
 		rotateX(-ball_z/50);
 		rotateZ(ball_x/50);
 		sphere(20);
+		println("ball_x: "+ball_x);
+		println("ball_z: "+ball_z);
 	popMatrix();
 }
 
@@ -60,3 +58,15 @@ void calcBallPosition(){
 	ball_z += ball_z_acc;
 }
 
+void setStage(int stage_Num){
+	pushMatrix();
+	switch (stage_Num) {
+		case 1:
+			translate(0, 100, -roadLength/2+100);
+			box(250,20,roadLength);
+			break;
+		default :
+			break;
+	}
+	popMatrix();
+}

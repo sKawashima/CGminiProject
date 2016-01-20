@@ -26,7 +26,6 @@ float ball_z_acc = 0;
 float ball_speed = 0.2f;
 
 public void draw() {
-
 	if(keyPressed == true){
 		if(key == 's'){
 			ball_z_acc += ball_speed;
@@ -57,10 +56,7 @@ public void draw() {
 
 	calcBallPosition();
 
-	pushMatrix();
-		translate(0, 100, /*-roadLength/2*/0);
-		box(250,20,roadLength);
-	popMatrix();
+	setStage(1);
 
 	//\u30dc\u30fc\u30eb\u306e\u63cf\u5199
 	pushMatrix();
@@ -68,6 +64,8 @@ public void draw() {
 		rotateX(-ball_z/50);
 		rotateZ(ball_x/50);
 		sphere(20);
+		println("ball_x: "+ball_x);
+		println("ball_z: "+ball_z);
 	popMatrix();
 }
 
@@ -76,6 +74,18 @@ public void calcBallPosition(){
 	ball_z += ball_z_acc;
 }
 
+public void setStage(int stage_Num){
+	pushMatrix();
+	switch (stage_Num) {
+		case 1:
+			translate(0, 100, -roadLength/2+100);
+			box(250,20,roadLength);
+			break;
+		default :
+			break;
+	}
+	popMatrix();
+}
   public void settings() { 	size(1024,576,P3D); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "CGminiProject" };
