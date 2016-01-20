@@ -1,5 +1,7 @@
 void setup() {
+	gameover();
 	size(1024,576,P3D);
+	reset();
 }
 
 int roadLength;
@@ -27,13 +29,7 @@ void draw() {
 			ball_x_acc -= ball_speed;
 		}
 		if(key == 'r'){
-			//リセットの処理を追加する
-			ball_x = 0;
-			ball_y = 70;
-			ball_z = 0;
-			ball_x_acc = 0;
-			ball_y_acc = 0;
-			ball_z_acc = 0;
+			reset();
 		}
 	}
 
@@ -78,8 +74,13 @@ void setStage(int stage_Num){
 		case 1:
 			roadLength = 3000;
 			roadWidth = 250;
+			pushMatrix();
 			translate(0, 100, -roadLength/2+100);
 			box(roadWidth,20,roadLength);
+			popMatrix();
+			fill(0);
+			translate(0, 0, -roadLength + 100);
+			box(roadWidth,200,50);
 			break;
 		default :
 			break;
@@ -92,6 +93,7 @@ void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
 			if(abs(ball_x) > roadWidth / 2) gameover();
+			else if(ball_z > 100) gameover();
 			break;
 		default :
 			break;
@@ -107,4 +109,13 @@ void gameover(){
 	textSize(32);
 	text("push R key", width / 2, height / 2 + 100, 0);
 	noFill();
+}
+
+void reset(){
+	ball_x = 0;
+	ball_y = 70;
+	ball_z = 0;
+	ball_x_acc = 0;
+	ball_y_acc = 0;
+	ball_z_acc = 0;
 }

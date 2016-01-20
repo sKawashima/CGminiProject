@@ -15,7 +15,9 @@ import java.io.IOException;
 public class CGminiProject extends PApplet {
 
 public void setup() {
+	gameover();
 	
+	reset();
 }
 
 int roadLength;
@@ -43,13 +45,7 @@ public void draw() {
 			ball_x_acc -= ball_speed;
 		}
 		if(key == 'r'){
-			//\u30ea\u30bb\u30c3\u30c8\u306e\u51e6\u7406\u3092\u8ffd\u52a0\u3059\u308b
-			ball_x = 0;
-			ball_y = 70;
-			ball_z = 0;
-			ball_x_acc = 0;
-			ball_y_acc = 0;
-			ball_z_acc = 0;
+			reset();
 		}
 	}
 
@@ -94,8 +90,13 @@ public void setStage(int stage_Num){
 		case 1:
 			roadLength = 3000;
 			roadWidth = 250;
+			pushMatrix();
 			translate(0, 100, -roadLength/2+100);
 			box(roadWidth,20,roadLength);
+			popMatrix();
+			fill(0);
+			translate(0, 0, -roadLength + 100);
+			box(roadWidth,200,50);
 			break;
 		default :
 			break;
@@ -108,6 +109,7 @@ public void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
 			if(abs(ball_x) > roadWidth / 2) gameover();
+			else if(ball_z > 100) gameover();
 			break;
 		default :
 			break;
@@ -123,6 +125,15 @@ public void gameover(){
 	textSize(32);
 	text("push R key", width / 2, height / 2 + 100, 0);
 	noFill();
+}
+
+public void reset(){
+	ball_x = 0;
+	ball_y = 70;
+	ball_z = 0;
+	ball_x_acc = 0;
+	ball_y_acc = 0;
+	ball_z_acc = 0;
 }
   public void settings() { 	size(1024,576,P3D); }
   static public void main(String[] passedArgs) {
