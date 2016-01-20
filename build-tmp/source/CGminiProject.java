@@ -22,6 +22,7 @@ public void setup() {
 
 int roadLength;
 int roadWidth;
+int gateHeight = 200;
 float ball_x = 0;
 float ball_y = 70;
 float ball_z = 0;
@@ -29,6 +30,7 @@ float ball_x_acc = 0;
 float ball_y_acc = 0;
 float ball_z_acc = 0;
 float ball_speed = 0.2f;
+boolean stageclear = false;
 
 public void draw() {
 	if(keyPressed == true){
@@ -66,7 +68,7 @@ public void draw() {
 		translate(ball_x, ball_y, ball_z);
 		rotateX(-ball_z/50);
 		rotateZ(ball_x/50);
-		sphere(20);
+		if(stageclear == false) sphere(20);
 		/*
 		println("ball_x: "+ball_x);
 		println("ball_y: "+ball_y);
@@ -96,7 +98,7 @@ public void setStage(int stage_Num){
 			popMatrix();
 			fill(0);
 			translate(0, 0, -roadLength + 100);
-			box(roadWidth,200,50);
+			box(roadWidth,gateHeight,50);
 			break;
 		default :
 			break;
@@ -110,10 +112,28 @@ public void checkBall(int stage_Num){
 		case 1:
 			if(abs(ball_x) > roadWidth / 2) gameover();
 			else if(ball_z > 100) gameover();
+			else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
 			break;
 		default :
 			break;
 	}
+}
+
+public void gameclear(){
+	stageclear = true;
+	ball_z = -roadLength+100;
+	ball_x_acc /= 5;
+	ball_x -= ball_x / 10;
+	gateHeight /= 1.1f;
+	fill(0);
+	textSize(48);
+	textAlign(CENTER);
+	pushMatrix();
+	translate(0, 0, 100);
+	text("Game Clear!", width / 2, height / 2, 0);
+	textSize(32);
+	text("push N key to  next Stage!!", width / 2, height / 2 + 100, 0);
+	popMatrix();
 }
 
 public void gameover(){
