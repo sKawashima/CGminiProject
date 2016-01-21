@@ -99,7 +99,6 @@ void setStage(int stage_Num){
 void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
-			pushMatrix();
 			break;
 		default :
 			break;
@@ -119,6 +118,13 @@ void setStageBase(int thisRoadLength, int thisRoadWidth){
 	fill(0);
 	translate(0, 0, -roadLength + 100);
 	box(roadWidth,gateHeight,50);
+	popMatrix();
+}
+
+void setblock(int x, int z, int thisWidth, int thisLength, int height){
+	pushMatrix();
+	translate(x + thisWidth / 2, height / 2, z + thisLength / 2);
+	box(thisWidth, height, thisLength);
 	popMatrix();
 }
 
