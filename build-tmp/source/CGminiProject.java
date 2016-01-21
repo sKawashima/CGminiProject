@@ -56,8 +56,6 @@ public void draw() {
 	ball_x - ball_x_acc*3, 0.0f, ball_z - ball_z_acc*3, // \u30ab\u30e1\u30e9\u304c\u5411\u304f\u5ea7\u6a19
 	0.0f, 1.0f, 0.0f); // \u30ab\u30e1\u30e9\u306e\u56de\u8ee2
 
-	calcBallPosition();
-
 	setStage(stage);
 
 	//\u30dc\u30fc\u30eb\u306e\u63cf\u5199
@@ -75,6 +73,7 @@ public void draw() {
 	popMatrix();
 	popMatrix();//--------------------------------------------------------
 	checkBall(stage);
+	calcBallPosition();
 }
 
 public void keyPressed(){
@@ -104,6 +103,8 @@ public void setStage(int stage_Num){
 			break;
 		case 2:
 			setStageBase(3000,500);
+			fill(240);
+			setblock(-150, -1300, 300, 1100, 1);
 			break;
 		default :
 			break;
@@ -115,6 +116,9 @@ public void setStage(int stage_Num){
 public void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
+			break;
+		case 2:
+			chkblock(-180, -1300, 360, 1100, 1);
 			break;
 		default :
 			break;
@@ -139,9 +143,24 @@ public void setStageBase(int thisRoadLength, int thisRoadWidth){
 
 public void setblock(int x, int z, int thisWidth, int thisLength, int height){
 	pushMatrix();
-	translate(x + thisWidth / 2, height / 2, z + thisLength / 2);
+	translate(x + thisWidth / 2, -height / 2 + 90, z + thisLength / 2);
 	box(thisWidth, height, thisLength);
 	popMatrix();
+}
+
+public void chkblock(int x, int z, int thisWidth, int thisLength, int dec){
+	//dec
+	//1: \u5373\u6b7b
+	switch (dec) {
+		case 1:
+			if(ball_x > x + 40 && ball_x < x + thisWidth - 40 && ball_z > z && ball_z < z + thisLength){
+				gameover();
+				ball_y_acc += 3;
+			}
+			break;
+		default :
+			break;
+	}
 }
 
 public void gameclear(){

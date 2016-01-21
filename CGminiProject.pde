@@ -40,8 +40,6 @@ void draw() {
 	ball_x - ball_x_acc*3, 0.0, ball_z - ball_z_acc*3, // カメラが向く座標
 	0.0, 1.0, 0.0); // カメラの回転
 
-	calcBallPosition();
-
 	setStage(stage);
 
 	//ボールの描写
@@ -59,6 +57,7 @@ void draw() {
 	popMatrix();
 	popMatrix();//--------------------------------------------------------
 	checkBall(stage);
+	calcBallPosition();
 }
 
 void keyPressed(){
@@ -88,6 +87,8 @@ void setStage(int stage_Num){
 			break;
 		case 2:
 			setStageBase(3000,500);
+			fill(240);
+			setblock(-150, -1300, 300, 1100, 1);
 			break;
 		default :
 			break;
@@ -99,6 +100,9 @@ void setStage(int stage_Num){
 void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
+			break;
+		case 2:
+			chkblock(-180, -1300, 360, 1100, 1);
 			break;
 		default :
 			break;
@@ -123,9 +127,24 @@ void setStageBase(int thisRoadLength, int thisRoadWidth){
 
 void setblock(int x, int z, int thisWidth, int thisLength, int height){
 	pushMatrix();
-	translate(x + thisWidth / 2, height / 2, z + thisLength / 2);
+	translate(x + thisWidth / 2, -height / 2 + 90, z + thisLength / 2);
 	box(thisWidth, height, thisLength);
 	popMatrix();
+}
+
+void chkblock(int x, int z, int thisWidth, int thisLength, int dec){
+	//dec
+	//1: 即死
+	switch (dec) {
+		case 1:
+			if(ball_x > x + 40 && ball_x < x + thisWidth - 40 && ball_z > z && ball_z < z + thisLength){
+				gameover();
+				ball_y_acc += 3;
+			}
+			break;
+		default :
+			break;
+	}
 }
 
 void gameclear(){
