@@ -14,6 +14,7 @@ float ball_x_acc = 0;
 float ball_y_acc = 0;
 float ball_z_acc = 0;
 float ball_speed = 0.2;
+int stage = 1;
 boolean stageclear = false;
 
 void draw() {
@@ -30,9 +31,6 @@ void draw() {
 		if(key == 'a'){
 			ball_x_acc -= ball_speed;
 		}
-		if(key == 'r'){
-			reset();
-		}
 	}
 
 	background(240);
@@ -44,7 +42,7 @@ void draw() {
 
 	calcBallPosition();
 
-	setStage(1);
+	setStage(stage);
 
 	//ボールの描写
 	pushMatrix();
@@ -60,7 +58,19 @@ void draw() {
 		*/
 	popMatrix();
 	popMatrix();//--------------------------------------------------------
-	checkBall(1);
+	checkBall(stage);
+}
+
+void keyPressed(){
+	if(key == 'r'){
+		stage = 1;
+		reset();
+	}
+	if(key == 'n'){
+		stage++;
+		println("stage: "+stage);
+		reset();
+	}
 }
 
 void calcBallPosition(){
@@ -74,15 +84,10 @@ void setStage(int stage_Num){
 	pushMatrix();
 	switch (stage_Num) {
 		case 1:
-			roadLength = 3000;
-			roadWidth = 250;
-			pushMatrix();
-			translate(0, 100, -roadLength/2+100);
-			box(roadWidth,20,roadLength);
-			popMatrix();
-			fill(0);
-			translate(0, 0, -roadLength + 100);
-			box(roadWidth,gateHeight,50);
+			setStageBase(3000,250);
+			break;
+		case 2:
+			setStageBase(3000,500);
 			break;
 		default :
 			break;
@@ -91,16 +96,30 @@ void setStage(int stage_Num){
 	noFill();
 }
 
+void setStageBase(int thisRoadLength, int thisRoadWidth){
+	roadLength = thisRoadLength;
+	roadWidth = thisRoadWidth;
+	pushMatrix();
+	translate(0, 100, -roadLength/2+100);
+	box(roadWidth,20,roadLength);
+	popMatrix();
+	pushMatrix();
+	fill(0);
+	translate(0, 0, -roadLength + 100);
+	box(roadWidth,gateHeight,50);
+	popMatrix();
+}
+
 void checkBall(int stage_Num){
 	switch (stage_Num) {
 		case 1:
-			if(abs(ball_x) > roadWidth / 2) gameover();
-			else if(ball_z > 100) gameover();
-			else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
 			break;
 		default :
 			break;
 	}
+	if(abs(ball_x) > roadWidth / 2) gameover();
+	else if(ball_z > 100) gameover();
+	else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
 }
 
 void gameclear(){
@@ -132,6 +151,8 @@ void gameover(){
 }
 
 void reset(){
+	stageclear = false;
+	gateHeight = 200;
 	ball_x = 0;
 	ball_y = 70;
 	ball_z = 0;
