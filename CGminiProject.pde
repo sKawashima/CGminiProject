@@ -90,6 +90,13 @@ void setStage(int stage_Num){
 			fill(240);
 			setblock(-150, -1300, 300, 1100, 1);
 			break;
+		case 3:
+		setStageBase(3000,500);
+			fill(240);
+			setblock(-250, -1100, 300, 900, 1);
+			setblock(-50, -2300, 300, 900, 1);
+			setblock(-250, -2900, 300, 200, 1);
+			break;
 		default :
 			break;
 	}
@@ -103,6 +110,11 @@ void checkBall(int stage_Num){
 			break;
 		case 2:
 			chkblock(-180, -1300, 360, 1100, 1);
+			break;
+		case 3:
+			chkblock(-250, -1100, 300, 900, 1);
+			chkblock(-50, -2300, 300, 900, 1);
+			chkblock(-250, -2900, 300, 200, 1);
 			break;
 		default :
 			break;
@@ -134,7 +146,7 @@ void setblock(int x, int z, int thisWidth, int thisLength, int height){
 
 void chkblock(int x, int z, int thisWidth, int thisLength, int dec){
 	//dec
-	//1: 即死
+	//1: 落下
 	switch (dec) {
 		case 1:
 			if(ball_x > x + 40 && ball_x < x + thisWidth - 40 && ball_z > z && ball_z < z + thisLength){
@@ -158,9 +170,17 @@ void gameclear(){
 	textAlign(CENTER);
 	pushMatrix();
 	translate(0, 0, 100);
-	text("Game Clear!", width / 2, height / 2, 0);
+	if(stage == 3){
+		text("Game All Clear!", width / 2, height / 2, 0);
+	}else{
+		text("Game Clear!", width / 2, height / 2, 0);
+	}
 	textSize(32);
-	text("push N key to next Stage!!", width / 2, height / 2 + 100, 0);
+	if(stage == 3){
+		text("push R key to Reset.", width / 2, height / 2 + 100, 0);
+	}else{
+		text("push N key to next Stage!!", width / 2, height / 2 + 100, 0);
+	}
 	popMatrix();
 }
 
