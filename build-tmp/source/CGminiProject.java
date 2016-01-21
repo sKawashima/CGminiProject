@@ -112,6 +112,17 @@ public void setStage(int stage_Num){
 	noFill();
 }
 
+public void checkBall(int stage_Num){
+	switch (stage_Num) {
+		case 1:
+			break;
+		default :
+			break;
+	}
+	if(abs(ball_x) > roadWidth / 2 || ball_z > 100 || ball_y != 70) gameover();
+	else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
+}
+
 public void setStageBase(int thisRoadLength, int thisRoadWidth){
 	roadLength = thisRoadLength;
 	roadWidth = thisRoadWidth;
@@ -126,15 +137,11 @@ public void setStageBase(int thisRoadLength, int thisRoadWidth){
 	popMatrix();
 }
 
-public void checkBall(int stage_Num){
-	switch (stage_Num) {
-		case 1:
-			break;
-		default :
-			break;
-	}
-	if(abs(ball_x) > roadWidth / 2 || ball_z > 100 || ball_y != 70) gameover();
-	else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
+public void setblock(int x, int z, int thisWidth, int thisLength, int height){
+	pushMatrix();
+	translate(x + thisWidth / 2, height / 2, z + thisLength / 2);
+	box(thisWidth, height, thisLength);
+	popMatrix();
 }
 
 public void gameclear(){
