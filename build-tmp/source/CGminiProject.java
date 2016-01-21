@@ -62,16 +62,16 @@ public void draw() {
 
 	//\u30dc\u30fc\u30eb\u306e\u63cf\u5199
 	pushMatrix();
-		fill(255);
-		translate(ball_x, ball_y, ball_z);
-		rotateX(-ball_z/50);
-		rotateZ(ball_x/50);
-		if(stageclear == false) sphere(20);
-		/*
-		println("ball_x: "+ball_x);
-		println("ball_y: "+ball_y);
-		println("ball_z: "+ball_z);
-		*/
+	fill(255);
+	translate(ball_x, ball_y, ball_z);
+	rotateX(-ball_z/50);
+	rotateZ(ball_x/50);
+	if(stageclear == false) sphere(20);
+	/*
+	println("ball_x: "+ball_x);
+	println("ball_y: "+ball_y);
+	println("ball_z: "+ball_z);
+	*/
 	popMatrix();
 	popMatrix();//--------------------------------------------------------
 	checkBall(stage);
@@ -133,8 +133,7 @@ public void checkBall(int stage_Num){
 		default :
 			break;
 	}
-	if(abs(ball_x) > roadWidth / 2) gameover();
-	else if(ball_z > 100) gameover();
+	if(abs(ball_x) > roadWidth / 2 || ball_z > 100 || ball_y != 70) gameover();
 	else if(ball_z < -roadLength +101 && ball_y == 70) gameclear();
 }
 
